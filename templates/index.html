@@ -1,15 +1,15 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Hello, World!</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-		<div>
-  			<h1>Hello, World!</h1>
-		</div>
-	</body>
-</html>
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+
+<h1 class="h1center">Bus visualization</h1>
+
+
+<h2>
+<a href="{{ url_for('bus_count') }}"> <p style="text-align:center;"></p>Bus count plot 2015/09/12-2015/09/20 </a>
+<a href="{{ url_for('bus_count') }}"> <p style="text-align:center;"></p>Live Bus count</a>
+<a href="{{ url_for('bus_static') }}"> <p style="text-align:center;"></p>Static Bus count map</a>
+<a href="{{ url_for('bus_live') }}"> <p style="text-align:center;"></p>Live Bus count map</a>
+</h2>
+
+{% endblock %}
