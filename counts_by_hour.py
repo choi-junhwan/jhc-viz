@@ -3,7 +3,8 @@ import numpy as np
 import datetime as datetime
 from bokeh.plotting import figure, show, save, output_file, vplot
 from bokeh.embed import components
-from bokeh.models import CustomJS, ColumnDataSource, Slider
+#from bokeh.models import CustomJS, ColumnDataSource, Slider
+from bokeh.models import ColumnDataSource, Slider
 
 def make_cash_data():
     date_format_str = "%Y-%m-%d %H:%M:%S"
