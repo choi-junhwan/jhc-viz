@@ -9,19 +9,19 @@ app = Flask(__name__)
 def main():
     return render_template('index.html')
 
-@app.route('/bus_count')
+@app.route('/bus_count', methods=['GET','POST'])
 def bus_count():
     script, div = counts_by_hour.plot_count_by_hour()
     return render_template('bus_count.html', script=script, div=div)
 
 
-@app.route('/bus_static')
+@app.route('/bus_static', methods=['GET','POST'])
 def bus_static():
     nyc = map_static.read_bus_loc()
     data = nyc[['latitude','longitude']].values.tolist()
     return render_template('bus_static.html', data=data)
 
-@app.route('/bus_live')
+@app.route('/bus_live', methods=['GET','POST'])
 def bus_live():
     nyc = map_live.nyc_current()
     """
