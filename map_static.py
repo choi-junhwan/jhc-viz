@@ -19,6 +19,8 @@ def make_cash_data():
                      header = 0,
                      index_col=1) # peek into the csv: col 0 is 'timestamp'
     # Save only vehicle id
+    # down sampling
+    df = df.ix[::5]
     df = df[['latitude', 'longitude']]
     df.to_csv('bus_latlon.csv')
     return 0
@@ -30,7 +32,7 @@ def read_bus_loc():
 
 
 if __name__=='__main__':
-    #make_cash_data()
+    make_cash_data()
     bus_loc = read_bus_loc()
     #Map
     map_options = GMapOptions(lat=40.71, lng=-73.98, map_type="roadmap", zoom=11)
