@@ -13,7 +13,7 @@ from bokeh.models import GMapPlot, GMapOptions, ColumnDataSource, Circle, DataRa
 def make_cash_data():
     date_format_str = "%Y-%m-%d %H:%M:%S"
     date_parser = lambda u: pd.datetime.strptime(u, date_format_str)
-    df = pd.read_csv("manhattan.csv",
+    df = pd.read_csv("../manhattan.csv",
                      parse_dates=True,
                      date_parser=date_parser,
                      header = 0,
@@ -25,15 +25,24 @@ def make_cash_data():
     df.to_csv('bus_latlon.csv')
     return 0
 
-def read_bus_loc():
-    name_list = ['latitude','longitude']
-    bus_loc = pd.read_csv('cash/bus_latlon.csv',names = name_list, header=1)
-    return bus_loc
-
+def read_bus_loc(date):
+    date_format_str = '%Y-%m-%d %H:%M:%S'
+    date_parser = lambda u: pd.datetime.strptime(u, date_format_str)
+    # read it again
+    name_list = ['datetime','vehicle_id','latitude','longitude']
+    df = pd.read_csv('cash/bus_data.csv',names = name_list, parse_dates=True, date_parser=date_parser,index_col = 0, header=0)
+    df = df.ix[::5]
+    pstart = pd.datetime.strptime(date[0]+"/00/00", '%Y/%m/%d/%H/%M')
+    pend   = pd.datetime.strptime(date[1]+"/23/59", '%Y/%m/%d/%H/%M')
+    try:
+        df = df.ix[pstart:pend][['latitude','longitude']]
+    except:
+        df = df[['latitude','longitude']]
+    return df
 
 if __name__=='__main__':
-    make_cash_data()
-    bus_loc = read_bus_loc()
+    #make_cash_data()
+    bus_loc = read_bus_loc(['2015/9/12/10','2015/9/14/17'])
     #Map
     map_options = GMapOptions(lat=40.71, lng=-73.98, map_type="roadmap", zoom=11)
 
