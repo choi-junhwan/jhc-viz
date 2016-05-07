@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import counts_by_hour
+import live_box
 import map_static
 import map_live
 
@@ -20,6 +21,12 @@ def bus_count():
         date = [app.vars['tstart'],app.vars['tend']]
         script, div = counts_by_hour.plot_count_by_hour(date)
         return render_template('bus_count_plot.html', script=script, div=div)
+
+@app.route('/bus_box')
+def bus_box():
+    df = live_box.read_bus_count()
+    script, div = live_box.Make_boxplot(df)
+    return render_template('bus_box.html', script=script, div=div)
 
 
 @app.route('/bus_static', methods=['Get','post'])
@@ -42,5 +49,5 @@ def bus_live():
     return render_template('bus_live.html', data=data)
 
 if __name__ == '__main__':
-    #app.run(debug=True)
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
+    #app.run(host='0.0.0.0')
